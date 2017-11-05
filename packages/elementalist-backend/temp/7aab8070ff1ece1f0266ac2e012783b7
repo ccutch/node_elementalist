@@ -1,0 +1,35 @@
+package ui
+
+import (
+	"reflect"
+	"testing"
+)
+
+func TestApplication_Init(t *testing.T) {
+	t.Run("Default Init", func(t *testing.T) {
+		a := new(Application)
+		c := new(Component)
+		expected := &Application{rootComponent: c}
+		a.Init(c)
+		if reflect.DeepEqual(a, expected) {
+			t.Errorf("Application.Init(c) = %v, expected %v", a, expected)
+		}
+	})
+}
+
+func TestApplication_Start(t *testing.T) {
+	tests := []struct {
+		name    string
+		a       *Application
+		wantErr bool
+	}{
+	// TODO: Add test cases.
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if err := tt.a.Start(); (err != nil) != tt.wantErr {
+				t.Errorf("Application.Start() error = %v, wantErr %v", err, tt.wantErr)
+			}
+		})
+	}
+}
