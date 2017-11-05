@@ -1,14 +1,15 @@
 import spawn from 'cross-spawn-promise'
 
-const defaultOptions = {}
-const docker = (...args) => spawn('docker', args, defaultOptions)
+const defaultOptions = {stdio: 'inherit'}
+const dockerWith = (options, ...args) => spawn('docker', args, options)
+const docker = (...args) => dockerWith(defaultOptions, ...args)
 
 export default class Element {
 
-  constructor(source, name, port) {
+  constructor(source, name) {
     this.source = source
     this.name = name
-    this.port = port
+    this.port = null
     this.imageName = null
     this.status = 'queued'
   }
@@ -19,16 +20,20 @@ export default class Element {
     this.status = 'deployed'
   }
 
-  build() {
+  async build() {
     this.status = 'building'
     // docker build ${source}
-
-
+    console.log('building: ', this.name)
+    await docker('build', `-t=${this.name}`, this.source)
   }
 
-  deploy() {
+  async deploy() {
     this.status = 'deploying'
-    // this.port = $(next available port)
-    // docker run ${image-name} -p *:${this.port}
+    await docker('run', '-d', '-P', '--name', this.name, this.name)
+
+    let res = await dockerWith({}, 'port', this.name)
+    res = res.toString('utf8')
+
+    this.port = parseInt(res.split(':')[1], 10)
   }
 }

@@ -2,8 +2,8 @@ import Element from './element'
 import elementManager from './manager'
 
 export function create(source, name) {
-  let port = elementManager.nextPort()
-  let element = new Element(source, name, port)
+  let port = null
+  let element = new Element(source, name)
   elementManager.add(element)
   element.buildAndDeploy()
 
