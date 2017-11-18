@@ -1,12 +1,22 @@
 {
   "name": "elementalist",
   "scripts": {
-    "start": "babel-node start"
+    "build": "babel -d ./build ./src -s",
+    "test": "ava"
   },
   "dependencies": {
-    "babel-core": "^6.26.0",
     "babel-preset-env": "^1.6.1",
-    "elementalist-backend": "^1.0.0",
-    "express": "^4.16.2"
+    "cross-spawn-promise": "^0.10.1"
+  },
+  "devDependencies": {
+    "ava": "^0.23.0",
+    "babel-cli": "^6.26.0",
+    "babel-register": "^6.26.0"
+  },
+  "ava": {
+    "require": [
+      "babel-register"
+    ],
+    "babel": "inherit"
   }
 }
