@@ -4,6 +4,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.create = create;
+exports.createAsync = createAsync;
 exports.getAll = getAll;
 
 var _Element = require('./Element');
@@ -18,7 +19,14 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 const supervisor = new _Supervisor2.default();
 
+// create element return promise of deployment job
 function create(source, name) {
+  let element = new _Element2.default(source, name);
+  return supervisor.deploy(element);
+}
+
+// create element, deploy in background and return element
+function createAsync(source, name) {
   let element = new _Element2.default(source, name);
   supervisor.deploy(element);
 

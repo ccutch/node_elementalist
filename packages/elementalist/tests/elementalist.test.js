@@ -25,7 +25,7 @@ test.skip('successfully deploy element', async t => {
   t.is(element.status, 'deployed')
 })
 
-test('deploy two in sync', async t => {
+test('deploy two elements concurrently', async t => {
   let source = fixture('success-case')
   let name = `test-element-${+new Date()}`
 
