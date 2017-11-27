@@ -1,8 +1,11 @@
 {
   "name": "elementalist",
+  "version": "0.0.2",
+  "main": "build/elementalist.js",
   "scripts": {
     "build": "babel -d ./build ./src -s",
-    "test": "ava"
+    "test": "ava",
+    "prepublish": "rm -rf build; npm run build"
   },
   "dependencies": {
     "babel-preset-env": "^1.6.1",
@@ -14,9 +17,7 @@
     "babel-register": "^6.26.0"
   },
   "ava": {
-    "require": [
-      "babel-register"
-    ],
+    "require": ["babel-register"],
     "babel": "inherit"
   }
 }

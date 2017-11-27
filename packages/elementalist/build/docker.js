@@ -20,7 +20,9 @@ const docker = async (options, ...args) => {
 
   args = args.filter(Boolean);
   try {
-    return await (0, _crossSpawnPromise2.default)('docker', args, options);
+    let res = await (0, _crossSpawnPromise2.default)('docker', args, options);
+    console.log(`docker: ${res.toString('utf-8')}`);
+    return res;
   } catch (err) {
     return err.stderr.toString('utf-8');
   }

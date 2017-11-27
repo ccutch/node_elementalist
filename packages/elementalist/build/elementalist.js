@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.elements = undefined;
+exports.state = exports.elements = undefined;
 exports.bootstrap = bootstrap;
 
 var _docker = require('./docker');
@@ -22,6 +22,8 @@ exports.elements = elements;
 
 // submodules
 
+let state = exports.state = 'loading';
+
 function initDockerSwarm() {
   let { SWARM_HOST: host } = process.env;
   let advertiseAddr = [];
@@ -37,16 +39,21 @@ function startDockerRegistry() {
 }
 
 async function bootstrap() {
+  exports.state = state = 'initializing';
   try {
-    await initDockerSwarm();
+    let res = await initDockerSwarm();
+    console.log(res.toString('utf-8'));
   } catch (error) {
     console.log(error.exitStatus, error.stderr.toString('utf-8'));
   }
 
   try {
-    await startDockerRegistry();
+    let res = await startDockerRegistry();
+    console.log(res.toString('utf-8'));
   } catch (error) {
     console.log('registry already running');
   }
+
+  exports.state = state = 'ready';
 }
 //# sourceMappingURL=elementalist.js.map

@@ -4,7 +4,7 @@ import docker from './docker'
 import * as elements from './elements'
 export { elements }
 
-export let state = 'not ready'
+export let state = 'loading'
 
 function initDockerSwarm() {
   let { SWARM_HOST: host } = process.env
@@ -31,13 +31,15 @@ function startDockerRegistry() {
 export async function bootstrap() {
   state = 'initializing'
   try {
-    await initDockerSwarm()
+    let res = await initDockerSwarm()
+    console.log(res.toString('utf-8'))
   } catch (error) {
     console.log(error.exitStatus, error.stderr.toString('utf-8'))
   }
 
   try {
-    await startDockerRegistry()
+    let res = await startDockerRegistry()
+    console.log(res.toString('utf-8'))
   } catch (error) {
     console.log('registry already running')
   }
